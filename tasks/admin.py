@@ -23,5 +23,12 @@ class NoteAdmin(admin.ModelAdmin):
     list_filter = ('created_at',)
     search_fields = ('content',)
 
-admin.site.register(Priority)
-admin.site.register(Category)
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    search_fields = ('name',)
+
+@admin.register(Priority)
+class PriorityAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    search_fields = ('name',)
