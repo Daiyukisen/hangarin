@@ -4,7 +4,6 @@ from tasks.views import task_list
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('allauth.urls')),  # ← add this
     path('', task_list, name='task_list'),
     path('', include('pwa.urls')),
 ]
