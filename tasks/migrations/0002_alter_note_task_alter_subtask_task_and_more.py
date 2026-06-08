@@ -1,0 +1,32 @@
+import django.db.models.deletion
+from django.db import migrations, models
+
+
+class Migration(migrations.Migration):
+
+    dependencies = [
+        ('tasks', '0001_initial'),
+    ]
+
+    operations = [
+        migrations.AlterField(
+            model_name='note',
+            name='task',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='tasks.task'),
+        ),
+        migrations.AlterField(
+            model_name='subtask',
+            name='task',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='tasks.task'),
+        ),
+        migrations.AlterField(
+            model_name='task',
+            name='category',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='tasks.category'),
+        ),
+        migrations.AlterField(
+            model_name='task',
+            name='priority',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='tasks.priority'),
+        ),
+    ]
