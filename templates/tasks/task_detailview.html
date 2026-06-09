@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header d-flex justify-content-between align-items-center">
+    <div>
+        <a href="{% url 'task_list' %}" class="btn btn-sm btn-outline-secondary mb-2">← Back to List</a>
+        <h2 class="page-title">{{ task.title }}</h2>
+    </div>
+    <div class="btn-list">
+        <a href="{% url 'task_update' task.id %}" class="btn btn-white">Edit Task</a>
+        <a href="{% url 'task_delete' task.id %}" class="btn btn-danger">Delete</a>
+    </div>
+</div>
+
+<div class="row row-cards mt-2">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-3">
+                    <span class="form-label text-muted small">Status</span>
+                    <span class="badge bg-blue-lt">{{ task.get_status_display }}</span>
+                </div>
+                <div class="mb-3">
+                    <span class="form-label text-muted small">Category</span>
+                    <span class="badge bg-secondary-lt">{{ task.category.name }}</span>
+                </div>
+                <div class="mb-3">
+                    <span class="form-label text-muted small">Priority</span>
+                    <span class="badge bg-danger-lt">{{ task.priority.name }}</span>
+                </div>
+                <div class="mb-3">
+                    <span class="form-label text-muted small">Deadline</span>
+                    <div class="fw-bold text-muted">{{ task.deadline|date:"M d, Y" }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card mb-3">
+            <div class="card-header"><h3 class="card-title">Description</h3></div>
+            <div class="card-body"><p>{{ task.description }}</p></div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="card-title">Subtasks Breakdown</h3>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'subtask_create' task.id %}" class="btn btn-sm btn-primary">+ Add Subtask</a>
+                {% endif %}
+            </div>
+            <div class="list-group list-group-flush">
+                {% for subtask in task.subtasks.all %}
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="me-2 fw-semibold">{{ subtask.title }}</span>
+                        <span class="badge bg-light text-dark">{{ subtask.status }}</span>
+                    </div>
+                    <div class="btn-list">
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'subtask_update' subtask.id %}" class="btn btn-xs btn-white">Edit</a>
+                            <a href="{% url 'subtask_delete' subtask.id %}" class="btn btn-xs bg-danger-lt text-danger">Remove</a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% empty %}
+                <div class="p-4 text-center text-muted">No subtasks created for this goal yet.</div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="card-title">Notes & Logs</h3>
+                <a href="{% url 'note_create' task.id %}" class="btn btn-sm btn-primary">+ Add Note</a>
+            </div>
+            <div class="card-body">
+                {% for note in task.notes.all %}
+                <div class="border-left border-primary pl-3 mb-3 pb-3 border-bottom">
+                    <p class="mb-1">{{ note.content }}</p>
+                    <small class="text-muted">Posted on {{ note.created_at|date:"M d, Y H:i" }}</small>
+                    <div class="mt-1">
+                        <a href="{% url 'note_update' note.id %}" class="text-primary small me-2">Edit</a>
+                        <a href="{% url 'note_delete' note.id %}" class="text-danger small">Delete</a>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="text-center text-muted py-3">No auxiliary notes found.</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

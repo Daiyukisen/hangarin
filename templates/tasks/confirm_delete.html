@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card col-md-5 mx-auto mt-5 border-danger">
+    <div class="card-status-top bg-danger"></div>
+    <div class="card-header">
+        <h3 class="card-title text-danger">Confirm Destruction of Record</h3>
+    </div>
+    <div class="card-body py-4">
+        <p>Sigurado ka ba na nais mong burahin ang permanenteng tala na ito?</p>
+        <blockquote class="text-muted italic">"{{ object }}"Blockquote>
+        <p class="text-danger small mt-2">Babala: Hindi na muling maibabalik ang datos na ito kapag kinumpirma.</p>
+    </div>
+    <div class="card-footer text-end">
+        <form method="post">
+            {% csrf_token %}
+            <button type="button" onclick="history.back()" class="btn btn-link link-secondary">Cancel</button>
+            <button type="submit" class="btn btn-danger">Yes, Delete Permanently</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
