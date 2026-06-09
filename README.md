@@ -59,7 +59,7 @@ For Command Prompt (CMD):
 hangarinenv\Scripts\activate.bat
 ```
 
-###3. Load Dependencies & Run
+### 3. Load Dependencies & Run
 Install the required packages, update your local database tables, and boot up the system:
 ```bash
 pip install -r requirements.txt
